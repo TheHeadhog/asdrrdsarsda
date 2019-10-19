@@ -160,10 +160,7 @@ bool imaResenja(list<Polinom> fja, double a, double b)
 
 double polovljenje(list<Polinom> fja, double a, double b, double eps)
 {
-	if (Calc(fja, a) == 0)
-		return a;
-	else if (Calc(fja, b) == 0)
-		return b;
+
 	int n = getN(a, b, eps);
 		
 	int br = 0;
@@ -187,4 +184,36 @@ int getN(double a, double b, double eps)
 	double c=log2((b - a) / eps) - 1;
 
 	return ceil(c);
+}
+
+
+bool Njutn(list<Polinom> fja, double a, double b, double& res, double eps)
+{
+	list<Polinom> fja1 = izvod(fja);
+	list<Polinom> fja2 = izvod(fja1);
+	double x0, m1, m2, x1, krit, n, f1aABS, f1bABS;
+	if (Calc(fja, a) * Calc(fja2, a) > 0)
+		x0 = a;
+	else if (Calc(fja, b) * Calc(fja2, b) > 0)
+		x0 = b;
+	else return false;
+	f1aABS = abs(Calc(fja1, a));
+	f1bABS = abs(Calc(fja1, b));
+
+	if (f1aABS == 0 || f1bABS == 0)
+	{
+		cout << "Ne moze se resiti ovom metodom!" << endl;
+		return false;
+	}
+
+	m1 = fmin(f1bABS, f1aABS);
+	m2 = fmax(abs(Calc(fja2, a)), abs(Calc(fja2, b)));
+	krit = sqrt((2 * m1 * eps / m2));
+	do
+	{
+		x1 = x0 - (Calc(fja, x0) / Calc(fja1, x0));
+		x0 = x1;
+	} while (abs(x1-x0)>krit);
+	res = x1;
+	return true;
 }

@@ -2,16 +2,16 @@
 
 void main()
 {
-	double a, b,eps;
+	double a, b, eps, res;
 	int n;
-	double k,e;
+	double k, e;
 	list<Polinom> polyList;
 	string ulaz;
 	getline(cin, ulaz);
-	cout<<ulaz<<endl;
+	cout << ulaz << endl;
 
 
-	polyList=ToPoly(deleteBlanks(ulaz));
+	polyList = ToPoly(deleteBlanks(ulaz));
 	ispisPoly(polyList);
 
 
@@ -21,16 +21,24 @@ void main()
 	cout << "Unesite zeljenu tacnost:" << endl;
 	cin >> eps;
 
-
-	if (imaResenja(polyList, a, b))
-	{
-		cout << "Resenje metodom polovljenja: " << polovljenje(polyList, a, b, eps) << "    +- " << eps << endl;
-
-
-	}
+	if (Calc(polyList, a) == 0)
+		cout << "Resenje: " << a << endl;
+	else if (Calc(polyList, b) == 0)
+		cout << "Resenje: " << b << endl;
 	else
 	{
-		cout << "Nema resenja!" << endl;
+		if (imaResenja(polyList, a, b))
+		{
+			//cout << "Resenje metodom polovljenja: " << polovljenje(polyList, a, b, eps) << "    +- " << eps << endl;
+			if(Njutn(polyList, a, b, res, eps))
+				cout << res << endl;
+
+
+		}
+		else
+		{
+			cout << "Nema resenja!" << endl;
+		}
 	}
 
 

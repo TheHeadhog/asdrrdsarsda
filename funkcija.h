@@ -43,3 +43,4 @@ bool imaResenja(list<Polinom> fja, double a, double b);
 
 double polovljenje(list<Polinom> fja, double a, double b, double eps);
 int getN(double a, double b, double eps);
+bool Njutn(list<Polinom> fja, double a, double b, double& res, double eps);
